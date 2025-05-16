@@ -1,0 +1,118 @@
+/* Section Background */
+.slider-section {
+  padding: 5px 0; /* Adds spacing */
+  border-radius: 10px;
+}
+
+/* Section Heading */
+.section-heading {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Wrapper for Cards */
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* Prevent unwanted scrolling */
+  margin: auto;
+}
+
+/* Card Container */
+.card-container {
+  display: flex;
+  overflow-x: auto; /* Enables smooth scrolling */
+  scroll-behavior: smooth;
+  gap: 16px;
+  padding: 20px 40px;
+  scroll-snap-type: x mandatory;
+  /* Hide Scrollbar */
+  -ms-overflow-style: none;  /* Hides scrollbar in Edge/IE */
+  scrollbar-width: none;  /* Hides scrollbar in Firefox */
+}
+
+.card-container::-webkit-scrollbar {
+  display: none; /* Hides scrollbar in Chrome, Safari */
+}
+
+/* Individual Cards */
+.card {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  background: linear-gradient(to bottom, rgb(45, 126, 248), rgb(148, 186, 243));
+  border-radius: 20px; /* Increased border radius */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.6);
+  width: 450px;
+  min-width: 250px;
+  padding: 16px;
+  text-align: center;
+  color: black;
+  cursor: pointer;
+}
+.card:hover {
+  transform: translateY(-10px); /* Makes the whole card rise */
+  transition: transform 0.3s ease-in-out;
+}
+
+
+/* Card Images */
+.card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px; /* Increased border radius for images */
+}
+
+/* Navigation Buttons */
+.nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 24px;
+  padding: 8px 12px;
+  z-index: 1;
+  color: #fff;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.nav-button.left {
+  left: 10px;
+}
+
+.nav-button.right {
+  right: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  .card {
+    width: 80%;
+    min-width: 80%;
+  }
+
+  .card-container {
+    padding: 20px 20px;
+    gap: 12px;
+  }
+
+  .nav-button {
+    font-size: 20px;
+    padding: 6px 10px;
+  }
+}
+
+/* View All Button */
+.view-all-container {
+  text-align: center;
+}
+
+

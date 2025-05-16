@@ -1,0 +1,21 @@
+.product-card {
+    border: 1px solid transparent; /* Default border is transparent */
+    padding: 8px;
+    text-align: center;
+    transition: border-color 0.3s ease; /* Smooth transition for border color changes */
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .product-card:hover {
+   
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.6);
+
+    transform: translateY(-10px); /* Moves card up by 5px */
+}
+  .products-container
+  {
+    background: rgb(24, 75, 153);
+    color: white;
+    border-radius: 10px;
+  }

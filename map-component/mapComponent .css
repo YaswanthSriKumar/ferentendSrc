@@ -1,0 +1,26 @@
+
+  /* Box that wraps around the entire content */
+  .map-container-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 0; /* Remove padding from wrapper */
+    margin: 0; /* Remove margin from wrapper */
+  }
+  
+  /* Box that holds the map title and description */
+  .map-title-wrapper {
+    padding: 16px;
+    background-color: #000000;
+  }
+  
+  /* Ensure the map container fills the entire space */
+  .map-container {
+    flex-grow: 1;
+    height: 100%;
+    width:100%;
+    margin: 0; /* No margin around the map */
+
+  }
+  
+ 

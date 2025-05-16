@@ -1,0 +1,46 @@
+/* nav.css */
+
+/* Styling for the Navbar */
+.navbarnav {
+    background: transparent !important; /* Force navbar to be transparent */
+    transition: background 0.3s ease !important; /* Smooth transition when changing background */
+    border-radius: 0 0 5px 5px ;
+    color: white !important;
+    position: fixed;
+    
+  }
+.navbarnavnothome
+{
+  background: white !important ; 
+  color:  rgb(79, 140, 231) !important ;
+  transition: background 0.3s ease !important; /* Smooth transition when changing background */
+  border-radius: 0 0 5px 5px ;
+  position: sticky !important;
+}
+  /* Hamburger icon should be visible only on mobile */
+  .hamburger-icon {
+    display: none;
+  }
+  
+  @media (max-width: 600px) {
+    .hamburger-icon {
+      display: block;
+    }
+  }
+  
+  /* Styling for Drawer */
+  .drawer {
+    background-color: rgba(0, 0, 0, 0.8); /* Same background as navbar when scrolled */
+    color: white;
+  }
+  
+  .drawer .MuiListItemText-root {
+    color: white; /* Ensures text color in Drawer is white */
+  }
+  
+  .drawer-paper {
+    background-color: rgb(47, 47, 175) !important; /* Set background color of Drawer */
+  }
+  
+  
+  

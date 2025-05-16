@@ -1,0 +1,166 @@
+/* Container for the entire carousel */
+.carousel-container {
+  text-align: center;
+  margin: 5px auto;
+  padding: 20px;
+  width: calc(100% - 40px); /* Adjust width if needed */
+  position: relative; /* Important for positioning arrows */
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Title of the products section */
+.carousel-header {
+  margin-bottom: 20px;
+}
+
+.carousel-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.carousel-description {
+  font-size: 1.2rem;
+  margin-top: 10px;
+}
+
+/* Carousel Slide */
+.carousel-slide {
+  position: relative;
+  height: 400px; /* Adjust the height */
+  overflow: hidden;
+  padding: 0px;
+  opacity: 0;
+  transition: opacity 1s ease-out;
+  border-radius: 10px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+  margin: 0 30px;
+  background-color: white !important;
+}
+
+/* Apply fade-in when the slide is active */
+.carousel-slide.active {
+  opacity: 1;
+}
+
+/* Container for image and text */
+.carousel-content {
+  display: flex;
+  height: 100%;
+  transition: all 1s ease;
+  position: relative;
+}
+
+/* Image section (left half) */
+.image-section {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  opacity: 1;
+  transition: opacity 1s ease-out;
+  border-radius: 10px;
+}
+.imagesize{
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.image-section.mobile {
+  opacity: 0.3 !important; /* Lower opacity for the image when mobile */
+}
+
+.image-section.slideInLeft {
+  transform: translateX(-100%);
+  opacity: 0;
+  animation: slideInLeft 1s ease-out forwards;
+}
+
+@keyframes slideInLeft {
+  0% {
+      transform: translateX(-100%);
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+/* Text section (right half) */
+.text-section {
+  flex: 1;
+  position: relative;
+  padding: 20px;
+  overflow: hidden;
+  opacity: 1;
+  transition: all 1s ease-out;
+  color: black;
+  background: white;
+}
+
+.text-section.mobile {
+  position: absolute; /* Position text on top of the image */
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  color: white;
+  text-align: center; /* Center the text */
+  z-index: 2; /* Ensure text is on top of the image */
+}
+
+.text-section.slideInRight {
+  transform: translateX(100%);
+  opacity: 0;
+  animation: slideInRight 1s ease-out forwards;
+}
+
+@keyframes slideInRight {
+  0% {
+      transform: translateX(100%);
+      opacity: 0;
+  }
+  100% {
+      transform: translateX(0);
+      opacity: 1;
+  }
+}
+
+/* Adjust for mobile screens */
+@media (max-width: 600px) {
+  .carousel-title {
+      font-size: 1.5rem;
+  }
+
+  .carousel-description {
+      font-size: 0.9rem;
+  }
+
+  /* Make sure the image fills the container correctly */
+  .image-section img {
+      width: 100%;
+      height: auto;
+  }
+}
+.carousel .control-arrow {
+  background-color: transparent; /* Dark background for arrows */
+  border-radius: 50%; /* Make them circular */
+  width: 40px;
+  height: 40px;
+  z-index: 2; /* Ensure they stay above other content */
+}
+.carousel .control-arrow:hover {
+  background: transparent !important;
+}
+/* Left arrow: yellow background */
+.carousel .control-arrow.control-prev {
+  top: 50%;
+}
+
+/* Right arrow: blue background */
+.carousel .control-arrow.control-next {
+  top: 50%;
+}
+
+/* Optional: Override hover effect if needed */
+

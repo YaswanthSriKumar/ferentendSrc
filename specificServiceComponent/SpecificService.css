@@ -1,0 +1,69 @@
+.service-container {
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;
+    background: white;
+    border-radius: 10px;
+    width: 100%;
+    height: 100vh;
+    margin: auto;
+  }
+  
+  /* Service Name - Centered at the Top */
+  .service-name {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Image + Description Section */
+  .service-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* Service Image - Positioned on Left */
+  .service-image {
+    width: 40%;
+    border-radius: 10px;
+  }
+  
+  /* Description Section - Positioned on Right */
+  .service-details {
+    width: 50%;
+  }
+  
+  .description-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .description-text {
+    font-size: 16px;
+  }
+  
+  /* Full-Width Avail Button at Bottom */
+  .avail-button {
+    background-color: rgb(79, 140, 231);
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 20px; /* Adds spacing above button */
+    text-align: center;
+    position: absolute;
+    bottom: 20px; /* Adjust as needed */
+    left: 0;
+  }
+  
+  .avail-button:hover {
+    background-color: rgb(41, 82, 143);
+  }
+  

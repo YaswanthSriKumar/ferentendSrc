@@ -1,0 +1,97 @@
+/* Container for the entire About Us section */
+.about-us-container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Main heading */
+.heading {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+/* Subheading */
+.subheading {
+  font-size: 18px;
+  margin-bottom: 32px;
+}
+
+/* Container for count-text items */
+.count-text-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Each individual item */
+.count-text-item {
+  flex: 1 1 20%;
+  max-width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Count */
+.count {
+  color: red;
+  font-weight: bold !important;
+  font-size: 70px !important;
+}
+
+/* Text */
+.text {
+  font-weight: bold !important;
+  font-size: 25px !important;
+}
+
+/* ---------- Responsive Breakpoints ---------- */
+
+/* Medium screens (tablets) */
+@media (max-width: 992px) {
+  .count-text-item {
+    flex: 1 1 20%;
+    max-width: 20%;
+  }
+
+  .count {
+    font-size: 60px !important;
+  }
+
+  .text {
+    font-size: 22px !important;
+  }
+}
+
+/* Small screens (phones) */
+@media (max-width: 600px) {
+  .count-text-item {
+    flex: 1 1 30%;
+    max-width: 30%;
+  }
+
+  .count {
+    font-size: 50px !important;
+  }
+
+  .text {
+    font-size: 20px !important;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .subheading {
+    font-size: 16px;
+  }
+
+  .count-text-container {
+    padding: 10px;
+  }
+}
