@@ -3,7 +3,7 @@ import { AppBar, Toolbar, IconButton, Box, Button, Drawer, List, ListItem, ListI
 import { Link,useLocation } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
 import DarkModeIcon from '@mui/icons-material/DarkMode'; // Import Dark Mode Icon
-import AllServices from '../viewAllServices/AllServicesComponent/AllServices';
+
 import './nav.css';
 
 const Nav = ({ toggleDarkMode, isDarkMode }) => {
@@ -39,7 +39,7 @@ const Nav = ({ toggleDarkMode, isDarkMode }) => {
             < >
               <Button color="inherit"  component={Link} to="/">Home</Button>
               <Button color="inherit" component={Link} to="/allservices">Services</Button>
-              <Button color="inherit" component={Link} to="/services">Products</Button>
+              <Button color="inherit" component={Link} to="/allproducts">Products</Button>
               <Button color="inherit" component={Link} to="/contact">Portfolio</Button>
               <Button color="inherit" component={Link} to="/contact">Careers</Button>
               <Button color="inherit" component={Link} to="/contact">AboutUs</Button>

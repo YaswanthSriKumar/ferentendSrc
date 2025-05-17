@@ -12,7 +12,8 @@ import SpecificService from "./specificServiceComponent/SpecificService"
 import AllServices from './viewAllServices/AllServicesComponent/AllServices';
 import IndividualService from './viewAllServices/individualService/individualServiceComponent/individualService'
 import SubServiceDashboard from './adminFolder/subserviceDashbord/SubserviceDashbord'
-import Footer from "./footerComponet/footer"
+import Footer from "./footerComponet/footer" 
+import AllProducts from "./viewAllProducts/viewAllProductsComponent/viewAllProductComponent"
 const Main = ({ toggleDarkMode, isDarkMode }) => {
   console.log("is it dark mood in main :   "+isDarkMode);
   return (
@@ -29,6 +30,8 @@ const Main = ({ toggleDarkMode, isDarkMode }) => {
 
         <Route path="/specificservice" element={<SpecificService />} />
         <Route path="/allservices" element={<><Nav toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} /><AllServices /></>} />
+        <Route path="/allproducts" element={<><Nav toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} /><AllProducts /></>} />
+
         <Route path="/service/:id" element={<><Nav toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} /><IndividualService /><Footer/></>} />
 
 
