@@ -30,7 +30,7 @@ const Nav = ({ toggleDarkMode, isDarkMode }) => {
   return (
     <>
       <AppBar className={`${isScrolled ? 'BaseColours' : navbarBackground} ${isDarkMode ? 'dark-mode-navbar' : ''}`}>
-        <Toolbar sx={{ justifyContent: 'space-between', padding: '0 !important', width: '90%', left: '5%', borderBottom: '2px solid white' }}>
+        <Toolbar sx={{ justifyContent: 'space-between', padding: '0 !important', width: '90% ' , left: '5%', borderBottom: '2px solid white' }}>
           <Box sx={{ width: '30%' }}>
             <h2>My Website</h2>
           </Box>
