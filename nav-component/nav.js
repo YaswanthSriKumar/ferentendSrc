@@ -40,7 +40,7 @@ const Nav = ({ toggleDarkMode, isDarkMode }) => {
               <Button color="inherit"  component={Link} to="/">Home</Button>
               <Button color="inherit" component={Link} to="/allservices">Services</Button>
               <Button color="inherit" component={Link} to="/allproducts">Products</Button>
-              <Button color="inherit" component={Link} to="/contact">Portfolio</Button>
+              <Button color="inherit" component={Link} to="/allportfolios">Portfolio</Button>
               <Button color="inherit" component={Link} to="/contact">Careers</Button>
               <Button color="inherit" component={Link} to="/contact">AboutUs</Button>
               <Button color="inherit" component={Link} to="/contact">ContactUs</Button>
@@ -68,10 +68,10 @@ const Nav = ({ toggleDarkMode, isDarkMode }) => {
           <ListItem component={Link} to="/allservices" onClick={handleDrawerToggle}>
             <ListItemText primary="Services" />
           </ListItem>
-          <ListItem component={Link} to="/Products" onClick={handleDrawerToggle}>
+          <ListItem component={Link} to="/allproducts" onClick={handleDrawerToggle}>
             <ListItemText primary="Products" />
           </ListItem>
-          <ListItem component={Link} to="/Portfolio" onClick={handleDrawerToggle}>
+          <ListItem component={Link} to="/allportfolios" onClick={handleDrawerToggle}>
             <ListItemText primary="Portfolio" />
           </ListItem>
           <ListItem component={Link} to="/Careers" onClick={handleDrawerToggle}>
