@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import CustomTable from "../commons/TableComponent";
 import ApiService from "../../services/ApiService";
 import API_URLS from "../../services/ApiUrl"
+import SlidePopup from "../../services/popup"
 
 import {
   AppBar,
@@ -15,7 +16,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Switch
+  Switch, Select, MenuItem,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -24,6 +25,9 @@ const PortfolioDashboard = () => {
   const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [updateed, setUpdated]=useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+  const [type, setType] = useState("");
+  const [message, setMessage] = useState("");
   // Log to verify parent's selectedRows value
   console.log("Parent selectedRows:", selectedRows);
 
@@ -102,6 +106,8 @@ const PortfolioDashboard = () => {
   }
 
   const [openAddDialog, setOpenAddDialog] = useState(false);
+  const [openAddSectorDialog, setOpenAddSectorDialog] = useState(false);
+
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   
@@ -110,9 +116,35 @@ const PortfolioDashboard = () => {
   const [portfolioShow, setPortfolioShow] = useState(false);
   const [portfolioImage, setPortfolioImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [sectorName, setSectorName] = useState("");
+  const [sectorDetails, setSectorDetails] = useState([]);
+  const [sectorId,setSectorId ] = useState([]);
 
-  const handleOpenAddDialog = () => setOpenAddDialog(true);
-  const handleCloseAddDialog = () => setOpenAddDialog(false);
+
+
+  const handleOpenAddDialog = async() => {
+    try {
+      const response = await ApiService.get(API_URLS.GET_SECTORS);
+      console.log(response);
+      setSectorDetails(response);
+    } catch (error) {
+      console.error("unable to load sectors:", error);
+    }
+    setOpenAddDialog(true);}
+  const handleOpenAddSectorDialog =()=> setOpenAddSectorDialog(true);
+  const handleCloseAddSectorDialog = () =>  {
+    setPortfolioImage("");
+    setSectorName("");
+    setImagePreview("");
+    setOpenAddSectorDialog(false);}
+  const handleCloseAddDialog = () => {
+    setPortfolioImage("");
+    setPortfolioName("");
+    setPortfolioDescription("");
+    setPortfolioShow("");
+    setImagePreview("");
+    setOpenAddDialog(false);}
+
   const handleOpenDeleteDialog = () => setOpenDeleteDialog(true);
   const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
 
@@ -129,6 +161,9 @@ const PortfolioDashboard = () => {
         portfolioImage: portfolioImage,
       portfolioDescription: portfolioDescription,
       portfolioShow: portfolioShow,
+      sector:{
+        sectorId:sectorId,
+      }
     };
     console.log("Service Data:", productData);
     try {
@@ -138,14 +173,45 @@ const PortfolioDashboard = () => {
           },
         });
         console.log("Response from server:", response);
-        alert("Form submitted successfully!");
+        setMessage("Form submitted successfully!");
+        setType("success");
+        setShowPopup(true);
       } catch (error) {
         console.error("Error submitting the form:", error);
-        alert("Failed to submit the form. Please try again.");
+        setMessage("Failed to submit the form. Please try again!");
+        setType("error");
+        setShowPopup(true);
       }
+      
     handleCloseAddDialog();
     setUpdated(prev => !prev);
   };
+  const handleAddSectorSubmit= async()=>{
+    console.log("submit clicked");
+    const productData = {
+      sectorName: sectorName,
+      sectorImage: portfolioImage,
+    };
+    console.log("Service Data:", productData);
+    try {
+        const response = await ApiService.post(API_URLS.UPLOAD_SECTORS, productData, {
+          headers: {
+            "Content-Type": "multipart/form-data", // Important for file uploads
+          },
+        });
+        console.log("Response from server:", response);
+        setMessage("Form submitted successfully!");
+        setType("success");
+        setShowPopup(true);
+      } catch (error) {
+        console.error("Error submitting the form:", error);
+        setMessage("Failed to submit the form. Please try again!");
+        setType("error");
+        setShowPopup(true);
+            }
+      handleCloseAddSectorDialog();
+      setUpdated(prev => !prev);
+  }
 
   const handleDelete = () => {
     console.log(selectedRows);
@@ -167,7 +233,7 @@ const PortfolioDashboard = () => {
           }}
         >
           <Typography variant="h6" sx={{ color: "#6A45F4", fontWeight: "bold" }}>
-            Sroduct Dashboard
+            portfolio Dashboard
           </Typography>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: "0" }}>
@@ -205,6 +271,7 @@ const PortfolioDashboard = () => {
           </Box>
 
           <Box sx={{ display: "flex", gap: "10px" }}>
+            <Button sx={{ bgcolor: "#6A45F4",color:"white" }} onClick={handleOpenAddSectorDialog}> Add Sector</Button>
             <IconButton sx={{ color: "#6A45F4" }} onClick={handleOpenAddDialog}>
               <AddIcon />
             </IconButton>
@@ -289,6 +356,32 @@ const PortfolioDashboard = () => {
                 "& .MuiInputLabel-root.Mui-focused": { color: "#6A45F4" }, // Focused label color
               }}
             />
+            <Select
+              name="serviceId"
+              value={sectorId}
+              onChange={setSectorId}
+              displayEmpty
+              fullWidth
+              sx={{
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+              }}
+            >
+              <MenuItem value="" disabled>
+                Select Sector
+              </MenuItem>
+              {sectorDetails.map(item=>(<MenuItem key={item.sectorId} value={item.sectorId}>
+                {item.sectorName}
+              </MenuItem>))}
+              
+            </Select>
             <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <Typography>Portfolio Show:</Typography>
               <Switch sx={{
@@ -373,6 +466,96 @@ const PortfolioDashboard = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog open={openAddSectorDialog} onClose={handleCloseAddSectorDialog} maxWidth="md" fullWidth>
+        <DialogTitle sx={{ textAlign: "center", fontWeight: "bold", color: "#6A45F4" }}>
+          Add New sector
+        </DialogTitle>
+        <DialogContent sx={{ display: "flex", gap: "20px",   }}>
+          <Box
+            sx={{
+              flex: 1,
+              border: "1px solid #ddd",
+              borderRadius: "5px",
+              padding: "10px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "200px",
+              backgroundColor: "#f7f7f7",
+              mt:2
+            }}
+          >
+            {imagePreview ? (
+              <img
+                src={imagePreview}
+                alt="Preview"
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+              />
+            ) : (
+              <Typography color="textSecondary">No Image Selected</Typography>
+            )}
+          </Box>
+
+          <Box sx={{ flex: 2, display: "flex", flexDirection: "column", gap: "15px", mt:2 }}>
+            <TextField
+              label="sector Name"
+              variant="outlined"
+              fullWidth
+              value={sectorName}
+              onChange={(e) => setSectorName(e.target.value)}
+              sx={{ mt:"40px",mb:"20px",
+                "& .MuiOutlinedInput-root": {
+                    // Outline color
+                  "&.Mui-focused fieldset": { borderColor: "#6A45F4" } // Focused outline color
+                },
+                "& .MuiInputLabel-root.Mui-focused": { color: "#6A45F4" }, // Focused label color
+              }}
+            />
+            
+           
+            <Button
+              variant="contained"
+              component="label"
+              sx={{
+                backgroundColor: "#6A45F4",
+                color: "#FFFFFF",
+                "&:hover": { backgroundColor: "#5636c7" }
+              }}
+            >
+              Upload Image
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+            </Button>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleAddSectorSubmit}
+            variant="contained"
+            sx={{
+              backgroundColor: "#6A45F4",
+              color: "#FFFFFF",
+              "&:hover": { backgroundColor: "#5636c7" },
+              margin: "0 auto",
+              display: "block",
+              width: "100%"
+            }}
+          >
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {showPopup && (
+        <SlidePopup
+          message={message}
+          type={type}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </>
   );
 };

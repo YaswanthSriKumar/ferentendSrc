@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Table, TableHead, TableRow, Box, TableCell, TableBody, Checkbox, IconButton, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, Button } from "@mui/material";
+import { Table,AppBar,Toolbar, TableHead, TableRow, Box, TableCell, TableBody, Checkbox, IconButton, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add"; // Add icon
 import DeleteIcon from "@mui/icons-material/Delete"; // Delete icon
 import API_URLS from "../../services/ApiUrl";
@@ -73,7 +73,7 @@ const SubServiceDashboard = () => {
   const [openDialog, setOpenDialog] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [formData1, setFormData1] = useState({
-    subserviceId: "",
+    subserviceId: 0,
     subserviceName: "",
     subserviceDescription: "",
     subserviceCost: "",
@@ -121,6 +121,15 @@ const SubServiceDashboard = () => {
       } catch (error) {
         console.error("Unable to fetch:", error);
       } 
+      setFormData1({
+        subserviceId: 0,
+        subserviceName: "",
+        subserviceDescription: "",
+        subserviceCost: "",
+        serviceId: "",
+        subserviceImage: null,
+      })
+      setImagePreview("");
     setOpenDialog(false); // Close dialog after submitting
   };
 
@@ -163,20 +172,23 @@ const SubServiceDashboard = () => {
   }
 
   return (
-    <div style={{ padding: "20px" }}>
-      {/* Dashboard Heading */}
-      <Typography
-        variant="h4"
-        sx={{ marginBottom: "20px", fontWeight: "bold" }}
-      >
-        SubService Dashboard
-      </Typography>
+    <AppBar position="static" sx={{ backgroundColor: "#FFFFFF", padding: "10px" }}>
+    {/* Dashboard Heading */}
+    <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center"
+          }}
+        >
+          <Typography variant="h6" sx={{ color: "#6A45F4", fontWeight: "bold" }}>
+            SubService Dashboard
+          </Typography>
 
-      {/* Action Buttons */}
-      <div
-        style={{ display: "flex", justifyContent: "flex-end", marginBottom: "10px" }}
-      >
-        <IconButton sx={{ color: "#6A45F4" }} onClick={handleOpenAddDialog}>
+          
+
+          <Box sx={{ display: "flex", gap: "10px" }}>
+          <IconButton sx={{ color: "#6A45F4" }} onClick={handleOpenAddDialog}>
           <AddIcon />
         </IconButton>
         <IconButton
@@ -186,7 +198,9 @@ const SubServiceDashboard = () => {
         >
           <DeleteIcon />
         </IconButton>
-      </div>
+          </Box>
+        </Toolbar>
+      
 
       {/* Handling API loading & empty data cases */}
       {loading ? (
@@ -367,8 +381,14 @@ const SubServiceDashboard = () => {
               displayEmpty
               fullWidth
               sx={{
-                "& .MuiOutlinedInput-root": {
-                  "&.Mui-focused fieldset": { borderColor: "#6A45F4" },
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
                 },
               }}
             >
@@ -451,7 +471,7 @@ const SubServiceDashboard = () => {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </AppBar>
   );
 };
 

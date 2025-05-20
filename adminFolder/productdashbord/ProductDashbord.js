@@ -164,7 +164,7 @@ const ProductDashboard = () => {
           }}
         >
           <Typography variant="h6" sx={{ color: "#6A45F4", fontWeight: "bold" }}>
-            Sroduct Dashboard
+            product Dashboard
           </Typography>
 
           <Box sx={{ display: "flex", alignItems: "center", gap: "0" }}>

@@ -96,6 +96,11 @@ const ServiceDashboard = () => {
         console.error("Error submitting the form:", error);
         alert("Failed to submit the form. Please try again.");
       }
+      setServiceName("");
+      setServiceDescription("");
+      setServiceImage("");
+      setServiceShow("");
+      setImagePreview("")
     handleCloseAddDialog();
     setUpdated(prev => !prev);
   };

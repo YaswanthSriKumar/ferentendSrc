@@ -21,6 +21,8 @@ const API_URLS = {
     UPLODAD_PORTFOLIO: "/SGPORTFOLIO/uploadportfolio",
     GET_SELECTED_PORTFOLIO: "/SGPORTFOLIO/getSelectedportfolio",
     UPDATE_PORTFOLIO:"/SGPORTFOLIO/updateportfolio",
+    UPLOAD_SECTORS:"/SGPORTFOLIO/uploadsector",
+    GET_SECTORS:"/SGPORTFOLIO/getSectors",
 
     // SUBSERVICE URLS
     UPLOAD_SUBSERVICES: "/SGSERVICES/uploadsubservice",

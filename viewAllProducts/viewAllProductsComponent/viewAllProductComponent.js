@@ -29,48 +29,48 @@ const AllProducts = () => {
   100% { background-position: 0% 50%; }
 `;
   const products = [
-    // {
-    //   id: 1,
-    //   name: "Product One",
-    //   description: "This is the first product. It has great features.",
-    //   price: 19.99,
-    //   image: "https://picsum.photos/seed/product1/300/200",
-    // },
-    // {
-    //   id: 2,
-    //   name: "Product Two",
-    //   description: "This is the second product with a sleek design.",
-    //   price: 29.99,
-    //   image: "https://picsum.photos/seed/product2/300/200",
-    // },
-    // {
-    //   id: 3,
-    //   name: "Product Three",
-    //   description: "This is the third product, loved by many.",
-    //   price: 39.99,
-    //   image: "https://picsum.photos/seed/product3/300/200",
-    // },
-    // {
-    //   id: 4,
-    //   name: "Product Four",
-    //   description: "This is another product with amazing features.",
-    //   price: 49.99,
-    //   image: "https://picsum.photos/seed/product4/300/200",
-    // },
-    // {
-    //   id: 5,
-    //   name: "Product Five",
-    //   description: "Elegance and performance in one product.",
-    //   price: 59.99,
-    //   image: "https://picsum.photos/seed/product5/300/200",
-    // },
-    // {
-    //   id: 6,
-    //   name: "Product Six",
-    //   description: "A popular product, loved by thousands.",
-    //   price: 69.99,
-    //   image: "https://picsum.photos/seed/product6/300/200",
-    // }
+    {
+      id: 1,
+      name: "Product One",
+      description: "This is the first product. It has great features.",
+      price: 19.99,
+      image: "https://picsum.photos/seed/product1/300/200",
+    },
+    {
+      id: 2,
+      name: "Product Two",
+      description: "This is the second product with a sleek design.",
+      price: 29.99,
+      image: "https://picsum.photos/seed/product2/300/200",
+    },
+    {
+      id: 3,
+      name: "Product Three",
+      description: "This is the third product, loved by many.",
+      price: 39.99,
+      image: "https://picsum.photos/seed/product3/300/200",
+    },
+    {
+      id: 4,
+      name: "Product Four",
+      description: "This is another product with amazing features.",
+      price: 49.99,
+      image: "https://picsum.photos/seed/product4/300/200",
+    },
+    {
+      id: 5,
+      name: "Product Five",
+      description: "Elegance and performance in one product.",
+      price: 59.99,
+      image: "https://picsum.photos/seed/product5/300/200",
+    },
+    {
+      id: 6,
+      name: "Product Six",
+      description: "A popular product, loved by thousands.",
+      price: 69.99,
+      image: "https://picsum.photos/seed/product6/300/200",
+    }
   ];
 
   // Dialog state and selected product
