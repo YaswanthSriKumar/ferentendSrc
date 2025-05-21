@@ -50,7 +50,10 @@ const PortfolioDashboard = () => {
             name: itam.portfolioName,
             description:itam.portfolioDescription,
             image:itam.portfolioImage,
-            show: itam.portfolioShow
+            show: itam.portfolioShow,
+            sector: itam.sector.sectorName,
+            sectorId: itam.sector.sectorId
+
           }
         ));
         console.log(transformedData)
@@ -77,15 +80,17 @@ const PortfolioDashboard = () => {
     }
    
   }, []);
-  async function handleUpdate(data){
-    console.log("data insde dashbord: "+ data.id);
-    console.log("data insde dashbord: "+ data.image);
+  async function handleUpdate(returnData){
+    console.log("data insde dashbord: "+ returnData.id);
+    console.log("data insde dashbord: "+ returnData.image);
     const formData = new FormData();
-    formData.append("portfolioid", data.id);
-    formData.append("portfolioName", data.name);
-    formData.append("portfolioDescription", data.description);
-    formData.append("portfolioShow", data.show);
-    formData.append("portfolioImage", data.image); // Ensure this is a `File` object
+    formData.append("portfolioid", returnData.id);
+    formData.append("portfolioName", returnData.name);
+    formData.append("portfolioDescription", returnData.description);
+    formData.append("portfolioShow", returnData.show);
+    formData.append("portfolioImage", returnData.image); // Ensure this is a `File` object
+    const match = data.find(service => service.sector === returnData.sector);
+    formData.append("sectorId", match.sectorId);
     
     console.log("FormData:", formData);
     
@@ -161,9 +166,9 @@ const PortfolioDashboard = () => {
         portfolioImage: portfolioImage,
       portfolioDescription: portfolioDescription,
       portfolioShow: portfolioShow,
-      sector:{
+      
         sectorId:sectorId,
-      }
+  
     };
     console.log("Service Data:", productData);
     try {
@@ -219,7 +224,7 @@ const PortfolioDashboard = () => {
     handleCloseDeleteDialog();
   };
 
-  const headings = ["Serviceid", "Name", "Description", "show"];
+  const headings = ["Serviceid", "Name","sector", "Description", "show"];
 
   return (
     <>
@@ -359,7 +364,7 @@ const PortfolioDashboard = () => {
             <Select
               name="serviceId"
               value={sectorId}
-              onChange={setSectorId}
+              onChange={(e) => setSectorId(e.target.value)}
               displayEmpty
               fullWidth
               sx={{
