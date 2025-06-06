@@ -34,8 +34,7 @@ const WhatWeOffer = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [userName, setUserName] = useState("");
-  const [userPhone, setUserPhone] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const [userContact, setUserContact] = useState("");
   const [comments, setComments] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [type, setType] = useState("");
@@ -73,17 +72,15 @@ const WhatWeOffer = () => {
   const handleDialogClose = () => {
     setDialogOpen(false);
     setUserName("");
-    setUserPhone("");
-    setUserEmail("");
+    setUserContact("");
     setComments("");
   };
 
   // Process the dialog submission
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (
       !userName.trim() ||
-      !userPhone.trim() ||
-      !userEmail.trim() ||
+      !userContact.trim() ||
       !comments.trim()
     ) {
       setType("error");
@@ -91,19 +88,32 @@ const WhatWeOffer = () => {
     setShowPopup("true")
       return;
     }
-    console.log("Service Selected:", selectedService?.subserviceName);
-    console.log("User Name:", userName);
-    console.log("User Phone:", userPhone);
-    console.log("User Email:", userEmail);
-    console.log("User comments:", comments);
-    setType("success");
+   
+    const formdata={
+      selectedType:"service",
+      selectedTypeId:selectedService.subserviceId,
+      customerName:userName,
+      customerContact:userContact,
+      status: null,
+      comments:comments
+    }
+    console.log(formdata);
+    try {
+      const responce = await ApiService.post(API_URLS.UPLOAD_USERS,formdata);
+      console.log(responce);
+      setType("success");
     setMessage("submited successfully");
     setShowPopup("true")
+    } catch (error) {
+      setType("error");
+    setMessage("sorry failed to upload");
+    setShowPopup("true")
+    }
+    
     
 
     setUserName("");
-    setUserPhone("");
-    setUserEmail("");
+    setUserContact("");
     setComments("");
     setDialogOpen(false);
   };
@@ -308,22 +318,14 @@ const WhatWeOffer = () => {
           />
           <TextField
             margin="dense"
-            label="Phone Number"
+            label="PhoneNumber/emil"
             type="text"
             fullWidth
             variant="outlined"
-            value={userPhone}
-            onChange={(e) => setUserPhone(e.target.value)}
+            value={userContact}
+            onChange={(e) => setUserContact(e.target.value)}
           />
-          <TextField
-            margin="dense"
-            label="Email"
-            type="email"
-            fullWidth
-            variant="outlined"
-            value={userEmail}
-            onChange={(e) => setUserEmail(e.target.value)}
-          />
+         
           <TextField
       margin="dense"
       label="Requirements"

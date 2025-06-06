@@ -31,7 +31,7 @@ const Nav = ({ toggleDarkMode, isDarkMode }) => {
     <>
       <AppBar className={`${isScrolled ? 'BaseColours' : navbarBackground} ${isDarkMode ? 'dark-mode-navbar' : ''}`}>
         <Toolbar sx={{ justifyContent: 'space-between', padding: '0 !important', width: '90% ' , left: '5%', borderBottom: '2px solid white' }}>
-          <Box sx={{ width: '30%' }}>
+          <Box sx={{ width: '40%' }}>
             <h2>My Website</h2>
           </Box>
 
@@ -48,9 +48,7 @@ const Nav = ({ toggleDarkMode, isDarkMode }) => {
           )}
 
           {/* Dark Mode Toggle Button */}
-          <IconButton color="inherit" onClick={toggleDarkMode}>
-            <DarkModeIcon />
-          </IconButton>
+         
 
           {isMobile && (
             <IconButton color="inherit" aria-label="open drawer" edge="end" onClick={handleDrawerToggle} className="hamburger-icon">

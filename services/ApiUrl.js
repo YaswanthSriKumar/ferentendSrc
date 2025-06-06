@@ -30,6 +30,9 @@ const API_URLS = {
     GET_SUBSERVICES_BY_SERVICEID: "/SGSERVICES/getsubservices/",
     DELETE_SUBSERVICE: "/SGSERVICES/delete/",
 
+    // USER URLS
+    UPLOAD_USERS:"/SGUSER/saveuser",
+    GET_USERS:"/SGUSER/getalluserdetails"
   };
   
   export default API_URLS;

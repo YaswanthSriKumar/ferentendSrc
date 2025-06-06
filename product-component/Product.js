@@ -130,7 +130,12 @@ function ProductGrid({ isDarkMode }) {
       <Typography variant="h4" component="h2" sx={{ mb: 2, textAlign: "center" }}>
         Products
       </Typography>
-
+      <Box sx={{ textAlign: 'right', mb: 1 }}>
+      <button className={`meadiamButtonRev`}>
+             View All Products
+        </button>
+       
+      </Box>
       {/* Product Grid */}
       <Grid container spacing={2}>
         {products.map((product) => (
@@ -143,7 +148,7 @@ function ProductGrid({ isDarkMode }) {
               <img
                 src={product.productImage}
                 alt={product.productName}
-                style={{ width: '100%', display: 'block', borderRadius: "10px" }}
+                style={{ width: '100%', display: 'block', borderRadius: "5px" }}
               />
               <Typography variant="h6" component="div" sx={{ mt: 1 }}>
                 {product.productName}
@@ -161,11 +166,7 @@ function ProductGrid({ isDarkMode }) {
       </Grid>
 
       {/* "View All" Button */}
-      <Box sx={{ textAlign: 'center', mt: 3 }}>
-        <Button variant="outlined" className={`meadiamButton ${isDarkMode ? 'meadiamButton-darkmode' : ''}`}>
-          View All Products
-        </Button>
-      </Box>
+      
 
       {/* Buy Product Dialog */}
       <Dialog open={dialogOpen} onClose={handleDialogClose}>

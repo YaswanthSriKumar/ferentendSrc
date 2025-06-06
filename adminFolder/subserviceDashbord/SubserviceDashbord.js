@@ -230,6 +230,12 @@ const SubServiceDashboard = () => {
                     selectedRows.length === subservices.length &&
                     subservices.length > 0
                   }
+                  sx={{
+                    color: "#6A45F4", // Default color
+                    "&.Mui-checked": {
+                      color: "#6A45F4", // Change color when checked
+                    },
+                  }} 
                 />
               </TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>ID</TableCell>
@@ -248,6 +254,12 @@ const SubServiceDashboard = () => {
                   <Checkbox
                     checked={selectedRows.includes(subservice.subserviceId)}
                     onChange={() => handleSelectRow(subservice.subserviceId)}
+                    sx={{
+                      color: "#6A45F4", // Default color
+                      "&.Mui-checked": {
+                        color: "#6A45F4", // Change color when checked
+                      },
+                    }} 
                   />
                 </TableCell>
                 <TableCell>{subservice.subserviceId}</TableCell>

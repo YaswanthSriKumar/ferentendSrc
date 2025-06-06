@@ -39,7 +39,7 @@
 .BaseColours
 {
   background: white !important ; 
-  color:  rgb(79, 140, 231) !important ;
+  color:  #004aad !important ;
 }
 /* General Dark Mode */
 .dark-mode {
@@ -75,16 +75,25 @@
 /* ___________buttons */
 .meadiamButton
 {
-  color: white;
-  padding: 12px 24px;
-  font-size: 16px;
+  color: rgb(56, 56, 56);
+  font-size: 15px;
   border: none;
-  background: rgb(24, 75, 153);
-  border-radius: 6px;
+  background: transparent;
+  border-bottom: 2px solid rgb(56, 56, 56);
+  cursor: pointer;
+}
+.meadiamButtonRev
+{
+  color: white;
+  font-size: 20px;
+  border: none;
+  background: transparent;
+  border-bottom: 2px solid white;
   cursor: pointer;
 }
 .meadiamButton:hover{
-  background: rgb(25, 108, 233);
+color: rgb(35, 35, 187);
+border-bottom: 2px solid rgb(35, 35, 187);
 }
 .meadiamButton-darkmode
 {

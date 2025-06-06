@@ -5,7 +5,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import carous
 
 const VideoCarousel = ({isDarkMode}) => {
   return (
-    <Box sx={{ width: "100%", margin: "0 auto", borderRadius: "10px" }}>
+    <Box sx={{ width: "100%", margin: "0 auto",  }}>
       <Carousel
         showArrows={true}
         showThumbs={false}
@@ -17,14 +17,13 @@ const VideoCarousel = ({isDarkMode}) => {
       >
         {/* Video Slide */}
         {["/videos/11898683_1920_1080_25fps.mp4", "/videos/gears.mp4", "/videos/3dprinting2.mp4"].map((videoSrc, index) => (
-          <Box key={index} sx={{ position: "relative", borderRadius: "10px", overflow: "hidden" }}>
+          <Box key={index} sx={{ position: "relative", overflow: "hidden" }}>
             {/* Video */}
             <video
               style={{
                 width: "100%",
-                height: "85vh",
+                height: "100vh",
                 objectFit: "cover",
-                borderRadius: "10px", // Apply borderRadius directly
               }}
               muted
               loop
@@ -41,14 +40,13 @@ const VideoCarousel = ({isDarkMode}) => {
                 top: 0,
                 left: 0,
                 width: "100%",
-                height: "85vh",
+                height: "100vh",
                 backgroundColor: "rgba(0, 0, 0, 0.4)", // Black with 70% opacity
                 display: "flex",
                 flexDirection: "column", // Stack Typography components
                 alignItems: "flex-start", // Align text to the left
                 justifyContent: "center", // Center vertically
                 paddingLeft: "5%", // Adjust left position
-                borderRadius: "10px", // Ensure overlay also has rounded corners
               }}
             >
               <Typography variant="h4" className= {` ${isDarkMode ? 'plaintext-darkmode' : 'plaintext'}`} >

@@ -12,7 +12,7 @@
 .navbarnavnothome
 {
   background: white !important ; 
-  color:  rgb(79, 140, 231) !important ;
+  color:  #004aad !important ;
   transition: background 0.3s ease !important; /* Smooth transition when changing background */
   border-radius: 0 0 5px 5px ;
   position: sticky !important;

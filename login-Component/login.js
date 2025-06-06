@@ -29,7 +29,7 @@ const Login = () => {
       }
       localStorage.setItem("authToken", responce.data);
       console.log("Token stored successfully!");
-      navigate("/serviceDashbord")
+      navigate("/customerDashbord")
 
   } catch (error) {
       // Extracting an error message properly

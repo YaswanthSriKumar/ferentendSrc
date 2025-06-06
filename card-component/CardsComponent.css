@@ -41,12 +41,11 @@
 .card {
   flex: 0 0 auto;
   scroll-snap-align: start;
-  background: linear-gradient(to bottom, rgb(45, 126, 248), rgb(148, 186, 243));
-  border-radius: 20px; /* Increased border radius */
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.6);
-  width: 450px;
+  /* background: linear-gradient(to bottom, rgb(45, 126, 248), rgb(148, 186, 243)); */
+  border-radius: 5px; /* Increased border radius */
+  width: 320px;
   min-width: 250px;
-  padding: 16px;
+  
   text-align: center;
   color: black;
   cursor: pointer;
@@ -61,7 +60,9 @@
 .card img {
   width: 100%;
   height: auto;
-  border-radius: 12px; /* Increased border radius for images */
+  border-radius: 5px; /* Increased border radius for images */
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+
 }
 
 /* Navigation Buttons */
@@ -112,7 +113,7 @@
 
 /* View All Button */
 .view-all-container {
-  text-align: center;
+  text-align: right;
 }
 
 

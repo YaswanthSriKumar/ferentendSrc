@@ -43,7 +43,11 @@ const Portfolio = ({isDarkMode}) => {
         <Typography variant="body1" className="carousel-description">
           Explore our exclusive collection of products tailored to your needs and preferences.
         </Typography>
+        <div style={{ marginTop: "10px",textAlign:"right", marginRight:"5%" }}>
+      <button className={`meadiamButton ${isDarkMode ? 'meadiamButton-darkmode' : ''}`}>View All portfolios</button>
+      </div>
       </Box>
+      
 
       {/* Carousel */}
       <Carousel
@@ -85,9 +89,7 @@ const Portfolio = ({isDarkMode}) => {
           </Typography>
         )}
       </Carousel>
-      <div style={{ marginTop: "10px" }}>
-      <button className={`meadiamButton ${isDarkMode ? 'meadiamButton-darkmode' : ''}`}>View All portfolios</button>
-      </div>
+      
     </Box>
   );
 };

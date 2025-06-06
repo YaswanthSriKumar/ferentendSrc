@@ -15,6 +15,8 @@ import SubServiceDashboard from './adminFolder/subserviceDashbord/SubserviceDash
 import Footer from "./footerComponet/footer" 
 import AllProducts from "./viewAllProducts/viewAllProductsComponent/viewAllProductComponent"
 import ViewAllPortfolio from "./viewAllPortfolio/viewAllPortfolioComponent/ViewAllPortfolio"
+import CustomerDashboard from "./adminFolder/customerDashboard/CustomerDashboardComponent"
+
 const Main = ({ toggleDarkMode, isDarkMode }) => {
   console.log("is it dark mood in main :   "+isDarkMode);
   return (
@@ -24,6 +26,7 @@ const Main = ({ toggleDarkMode, isDarkMode }) => {
       <Routes>
         <Route path="/" element={<><Nav toggleDarkMode={toggleDarkMode} isDarkMode={isDarkMode} /><Home isDarkMode={isDarkMode} /></>} />
         <Route path="/admin" element={<Login />} />
+        <Route path="/customerDashbord" element={<PrivateRoute><AdminNav /><CustomerDashboard /></PrivateRoute>} />
         <Route path="/serviceDashbord" element={<PrivateRoute><AdminNav /><ServiceDashbord /></PrivateRoute>} />
         <Route path="/productDashbord" element={<PrivateRoute><AdminNav /><ProductDashboard /></PrivateRoute>} />
         <Route path="/portfolioDashbord" element={<PrivateRoute><AdminNav /><PortfolioDashboard /></PrivateRoute>} />

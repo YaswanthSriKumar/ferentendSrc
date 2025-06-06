@@ -22,6 +22,7 @@ function AdminNav() {
           </Typography>
           <nav>
             <ul className="navb">
+            <li><Link className="custom-link" to="/customerDashbord">customers</Link></li>
               <li><Link className="custom-link" to="/serviceDashbord">services</Link></li>
               <li><Link className="custom-link" to="/subsevrvice">subservice</Link></li>
               <li><Link className="custom-link" to="/productDashbord">products</Link></li>

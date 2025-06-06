@@ -64,7 +64,13 @@ const CardsComponent = ({ isDarkMode }) => {
   // Otherwise, show the cards slider.
   return (
     <div className={`slider-section ${isDarkMode ? 'dark-mode-section' : 'BaseColours'}`}>
+      
       <h2 className="section-heading">Our Services</h2>
+      <div className="view-all-container">
+        <button className={`meadiamButton ${isDarkMode ? 'meadiamButton-darkmode' : ''}`}>
+          View All Services
+        </button>
+      </div>
       <div className="slider-wrapper">
         <button className="nav-button left" onClick={() => scroll('left')}>&lt;</button>
         <div className="card-container" ref={containerRef}>
@@ -76,17 +82,12 @@ const CardsComponent = ({ isDarkMode }) => {
             >
               <img src={card.serviceImage} alt={card.serviceName} />
               <h3>{card.serviceName.toUpperCase()}</h3>
-              <p>{card.serviceDescription.split(".")[0]}</p>
             </div>
           ))}
         </div>
         <button className="nav-button right" onClick={() => scroll('right')}>&gt;</button>
       </div>
-      <div className="view-all-container">
-        <button className={`meadiamButton ${isDarkMode ? 'meadiamButton-darkmode' : ''}`}>
-          View All Services
-        </button>
-      </div>
+      
     </div>
   );
 };

@@ -26,12 +26,12 @@ const AllServices = () => {
   return (
       
     <Box sx={{ width: "100%", textAlign: "center" }}>
-      <Typography variant="h3" sx={{marginBottom:'10px'}}>Engineering Services</Typography>
 
       {/* Top Full-Width Image */}
       <Box sx={{ width: "100%" }}>
         <img src="https://picsum.photos/1200/400" alt="Top Banner" style={{ width: "100%", height: "auto" }} />
       </Box>
+      <Typography variant="h3" sx={{marginBottom:'10px', mt:"10px"}}>Engineering Services</Typography>
 
       {/* Card Section */}
       <Grid container spacing={3} sx={{ marginTop: 2, padding: 2 }}>
@@ -64,11 +64,11 @@ const AllServices = () => {
         ))}
       </Grid>
 
-      <Typography variant="h3" sx={{marginBottom:'10px'}}>3D Printing Services</Typography>
 
       <Box sx={{ width: "100%" }}>
         <img src="https://picsum.photos/1200/400" alt="Top Banner" style={{ width: "100%", height: "auto" }} />
       </Box>
+      <Typography variant="h3" sx={{marginBottom:'10px',mt:"10px"}}>3D Printing Services</Typography>
 
       {/* Card Section */}
       <Grid container spacing={2} sx={{ marginTop: 2, padding: 2 }}>
