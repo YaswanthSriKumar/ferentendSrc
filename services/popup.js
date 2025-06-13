@@ -12,7 +12,7 @@ const SlidePopup = ({ message, type, onClose }) => {
     const timer = setTimeout(() => {
       setVisible(false);
       if (onClose) onClose();
-    }, 4500);
+    }, 3500);
     return () => clearTimeout(timer);
   }, [onClose]);
 

@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from "react";
 import CustomTable from "../commons/TableComponent";
 import ApiService from "../../services/ApiService";
 import API_URLS from "../../services/ApiUrl"
+import SlidePopup from "../../services/popup"
+
 import {
   AppBar,
   Toolbar,
@@ -23,6 +25,9 @@ const ProductDashboard = () => {
   const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [updateed, setUpdated]=useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+  const [type, setType] = useState("");
+  const [message, setMessage] = useState("");
   // Log to verify parent's selectedRows value
   console.log("Parent selectedRows:", selectedRows);
 
@@ -91,11 +96,14 @@ const ProductDashboard = () => {
       });
     
       console.log("Response from server:", response);
-      alert("Form submitted successfully!");
+      setMessage(response);
+      setType("success");
+      setShowPopup(true);   
     } catch (error) {
       console.error("Error submitting the form:", error);
-      alert("Failed to submit the form. Please try again.");
-    }
+      setMessage("faield to update");
+      setType("error");
+      setShowPopup(true);       }
   setUpdated(prev => !prev);
   }
 
@@ -134,20 +142,36 @@ const ProductDashboard = () => {
             "Content-Type": "multipart/form-data", // Important for file uploads
           },
         });
-        console.log("Response from server:", response);
-        alert("Form submitted successfully!");
+        console.log("Response from server:", response);        
+        setMessage(response.data);
+      setType("success");
+      setShowPopup(true);
       } catch (error) {
         console.error("Error submitting the form:", error);
-        alert("Failed to submit the form. Please try again.");
-      }
+        setMessage("failed to upload");
+        setType("error");
+        setShowPopup(true);      }
     handleCloseAddDialog();
     setUpdated(prev => !prev);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async() => {
     console.log(selectedRows);
-    alert("Service Deleted Successfully!");
+    try {
+      const response = await ApiService.delete(API_URLS.DELETE_PRODUCT+selectedRows);
+      console.log(response);
+      setMessage(response);
+        setType("error");
+        setShowPopup(true);   
+    } catch (error) {
+      console.error("Unable to fetch:", error);
+      setMessage("failed to delete");
+        setType("error");
+        setShowPopup(true);   
+    }  
     handleCloseDeleteDialog();
+    setUpdated(prev => !prev);
+
   };
 
   const headings = ["Serviceid", "Name", "Description", "show"];
@@ -369,6 +393,13 @@ const ProductDashboard = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      {showPopup && (
+        <SlidePopup
+          message={message}
+          type={type}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </>
   );
 };

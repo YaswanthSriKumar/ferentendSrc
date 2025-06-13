@@ -90,7 +90,7 @@ const WhatWeOffer = () => {
     }
    
     const formdata={
-      selectedType:"service",
+      selectedType:"services",
       selectedTypeId:selectedService.subserviceId,
       customerName:userName,
       customerContact:userContact,

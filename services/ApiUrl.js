@@ -7,6 +7,10 @@ const API_URLS = {
     GET_SELECTED_SERVICES: "/SGSERVICES/getSelected",
     UPDATE_SERVICES:"/SGSERVICES/updateservice",
     GET_SERVICE_NAME_ID:"/SGSERVICES/ServiceNames",
+    DELETE_SERVICE:"/SGSERVICES/deleteSerices/",
+    UPLOAD_SERVICE_SECTORS:"/SGSERVICES/uploadSector",
+    GET_SERVICE_SECTORNAMES:"/SGSERVICES/getSectorNames",
+    DELETE_SERVICE_SECTOR:"/SGSERVICES/deleteSector/",
 
     // PRODUCT URLS
     GET_PRODUCT: "/SGPRODUCTS/getproducts",
@@ -14,6 +18,7 @@ const API_URLS = {
     UPLODAD_PRODUCT: "/SGPRODUCTS/uploadproduct",
     GET_SELECTED_PRODUCT: "/SGPRODUCTS/getSelected",
     UPDATE_PRODUCT:"/SGPRODUCTS/updateproduct",
+    DELETE_PRODUCT:"/SGPRODUCTS/deleteProducts/",
 
     // PORTFOLIO URLS
     GET_PORTFOLIO: "/SGPORTFOLIO/getportfolio",
@@ -23,16 +28,20 @@ const API_URLS = {
     UPDATE_PORTFOLIO:"/SGPORTFOLIO/updateportfolio",
     UPLOAD_SECTORS:"/SGPORTFOLIO/uploadsector",
     GET_SECTORS:"/SGPORTFOLIO/getSectors",
+    DELETE_PORTFOLIOS:"/SGPORTFOLIO/deletePortfolios/",
+    DELETE_SECTORS: "/SGPORTFOLIO/deleteSectors/",
 
     // SUBSERVICE URLS
     UPLOAD_SUBSERVICES: "/SGSERVICES/uploadsubservice",
     GET_SUBSERVICES:"/SGSERVICES/getsubservices",
     GET_SUBSERVICES_BY_SERVICEID: "/SGSERVICES/getsubservices/",
-    DELETE_SUBSERVICE: "/SGSERVICES/delete/",
+    DELETE_SUBSERVICE: "/SGSERVICES/deleteSubService/",
 
     // USER URLS
     UPLOAD_USERS:"/SGUSER/saveuser",
-    GET_USERS:"/SGUSER/getalluserdetails"
+    GET_USERS:"/SGUSER/getalluserdetails",
+    UPDATEUSERDETAILS:"/SGUSER/updateuserdetails/",
+    DELETEUSER:"/SGUSER/deletebyid/"
   };
   
   export default API_URLS;

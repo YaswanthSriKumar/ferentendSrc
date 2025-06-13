@@ -17,6 +17,7 @@ import {
   DialogContent,
   DialogTitle,
   Switch, Select, MenuItem,
+  List, ListItem, ListItemText
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -102,11 +103,14 @@ const PortfolioDashboard = () => {
       });
     
       console.log("Response from server:", response);
-      alert("Form submitted successfully!");
+      setMessage(response);
+      setType("error");
+      setShowPopup(true);
     } catch (error) {
       console.error("Error submitting the form:", error);
-      alert("Failed to submit the form. Please try again.");
-    }
+      setMessage("unable to update");
+      setType("error");
+      setShowPopup(true);    }
   setUpdated(prev => !prev);
   }
 
@@ -124,6 +128,18 @@ const PortfolioDashboard = () => {
   const [sectorName, setSectorName] = useState("");
   const [sectorDetails, setSectorDetails] = useState([]);
   const [sectorId,setSectorId ] = useState([]);
+  const [sectorList, setSectorList]= useState([]);
+  const [sectorListDialogbox, setSectorListDialogbox]= useState(false);
+  const handleOpenSectorListDialogbox= async()=>{
+    try {
+      const response = await ApiService.get(API_URLS.GET_SECTORS);
+      console.log(response);
+      setSectorList(response);
+    } catch (error) {
+    }
+    setSectorListDialogbox(true)
+  }
+  const handlecloseSectorListDialogbox =()=> setSectorListDialogbox(false)
 
 
 
@@ -205,7 +221,7 @@ const PortfolioDashboard = () => {
           },
         });
         console.log("Response from server:", response);
-        setMessage("Form submitted successfully!");
+        setMessage("upload succesfull");
         setType("success");
         setShowPopup(true);
       } catch (error) {
@@ -218,11 +234,38 @@ const PortfolioDashboard = () => {
       setUpdated(prev => !prev);
   }
 
-  const handleDelete = () => {
+  const handleDelete = async() => {
     console.log(selectedRows);
-    alert("Service Deleted Successfully!");
+    try {
+      const response = await ApiService.delete(API_URLS.DELETE_PORTFOLIOS+selectedRows);
+      console.log(response);
+      setMessage(response);
+      setType("error");
+      setShowPopup(true);
+    } catch (error) {
+      setMessage("unable to delete");
+      setType("error");
+      setShowPopup(true);
+    }  
     handleCloseDeleteDialog();
+    setUpdated(prev => !prev);
+
   };
+  const handleSectorListDelete =async(sector)=>{
+    try {
+      const response = await ApiService.delete(API_URLS.DELETE_SECTORS+sector.sectorId);
+      console.log(response);
+      setMessage(response);
+      setType("error");
+      setShowPopup(true);
+      handlecloseSectorListDialogbox();
+    } catch (error) {
+      setMessage("unable to delete");
+      setType("error");
+      setShowPopup(true);
+      console.log("unable to delete");
+    }
+     }
 
   const headings = ["Serviceid", "Name","sector", "Description", "show"];
 
@@ -240,7 +283,7 @@ const PortfolioDashboard = () => {
           <Typography variant="h6" sx={{ color: "#6A45F4", fontWeight: "bold" }}>
             portfolio Dashboard
           </Typography>
-
+{/* 
           <Box sx={{ display: "flex", alignItems: "center", gap: "0" }}>
             <TextField
               placeholder="Search services..."
@@ -273,10 +316,13 @@ const PortfolioDashboard = () => {
             >
               Search
             </Button>
-          </Box>
+          </Box> */}
 
           <Box sx={{ display: "flex", gap: "10px" }}>
             <Button sx={{ bgcolor: "#6A45F4",color:"white" }} onClick={handleOpenAddSectorDialog}> Add Sector</Button>
+            <Button sx={{ bgcolor: "#6A45F4",color:"white" }} onClick={handleOpenSectorListDialogbox}> delete sector</Button>
+
+            
             <IconButton sx={{ color: "#6A45F4" }} onClick={handleOpenAddDialog}>
               <AddIcon />
             </IconButton>
@@ -554,6 +600,37 @@ const PortfolioDashboard = () => {
           </Button>
         </DialogActions>
       </Dialog>
+       {/* dialog box forsector deltion  */}
+       <Dialog open={sectorListDialogbox} onClose={handlecloseSectorListDialogbox} maxWidth="sm" fullWidth>
+      <DialogTitle sx={{ textAlign: "center", fontWeight: "bold", color: "#6A45F4" }}>
+        Sector List
+      </DialogTitle>
+
+      <DialogContent>
+        <List>
+          {sectorList.map((sector) => (
+            <ListItem
+              key={sector.sectorId}
+              secondaryAction={
+                <IconButton edge="end" onClick={() => handleSectorListDelete(sector)} color="error">
+                  <DeleteIcon />
+                </IconButton>
+              }
+            >
+              <ListItemText primary={sector.sectorId} />
+              <ListItemText primary={sector.sectorName} />
+
+            </ListItem>
+          ))}
+        </List>
+      </DialogContent>
+
+      <DialogActions>
+        <Button onClick={handlecloseSectorListDialogbox} variant="contained" sx={{ backgroundColor: "#6A45F4", color: "#fff", "&:hover": { backgroundColor: "#5636c7" } }}>
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
       {showPopup && (
         <SlidePopup
           message={message}

@@ -2,9 +2,11 @@ import React, { useEffect, useState, useCallback } from "react";
 import CustomTable from "../commons/TableComponent";
 import ApiService from "../../services/ApiService";
 import API_URLS from "../../services/ApiUrl"
-import {Select, MenuItem,AppBar,Toolbar,Typography,TextField,Button,IconButton,Box,Dialog,DialogActions,DialogContent,DialogTitle,Switch} from "@mui/material";
+import {Select, MenuItem,AppBar,Toolbar,Typography,TextField,Button,IconButton,Box,Dialog,DialogActions,DialogContent,DialogTitle,Switch,List, ListItem, ListItemText, } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CloseIcon from "@mui/icons-material/Close";
+import SlidePopup from "../../services/popup"
 
 const ServiceDashboard = () => {
   const [data, setData] = useState([]);
@@ -58,16 +60,76 @@ const ServiceDashboard = () => {
 
   const [openAddDialog, setOpenAddDialog] = useState(false);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [openSectordialog,setOpenSectordialog]= useState(false);
   const [serviceName, setServiceName] = useState("");
   const [serviceDescription, setServiceDescription] = useState("");
   const [serviceShow, setServiceShow] = useState(false);
   const [serviceImage, setServiceImage] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [sector, setSector] = useState("");
-  const handleOpenAddDialog = () => setOpenAddDialog(true);
+  const[sectorName, setSectorName] = useState("");
+  const [sectorList, setSectorList]= useState([]);
+  const [sectorListDialogbox, setSectorListDialogbox]= useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [type, setType] = useState("");
+  const [message, setMessage] = useState("");
+  const handleOpenSectorListDialogbox= async()=>{
+    try {
+      const response = await ApiService.get(API_URLS.GET_SERVICE_SECTORNAMES);
+      console.log(response);
+      setSectorList(response);
+    } catch (error) {
+    }
+    setSectorListDialogbox(true)
+  }
+  const handlecloseSectorListDialogbox =()=> setSectorListDialogbox(false)
+  const handleOpenAddDialog = async() => {
+try {
+  const response = await ApiService.get(API_URLS.GET_SERVICE_SECTORNAMES);
+  console.log(response);
+  setSectorList(response);
+} catch (error) {
+  
+}
+    setOpenAddDialog(true)};
   const handleCloseAddDialog = () => setOpenAddDialog(false);
   const handleOpenDeleteDialog = () => setOpenDeleteDialog(true);
   const handleCloseDeleteDialog = () => setOpenDeleteDialog(false);
+  const handleOpenSectorDialog=()=> setOpenSectordialog(true);
+  const handleCloseSectorDialog=()=> setOpenSectordialog(false);
+
+  const submitSector= async()=>{
+
+    console.log("++++++submit sector clicked++++++");
+    console.log(sectorName);
+    const formData={
+      sectorName:sectorName,
+      sectorImage: serviceImage
+    }
+    
+    console.log(formData);
+    try {
+      const responce= await ApiService.post(API_URLS.UPLOAD_SERVICE_SECTORS, formData,{
+        headers: {
+          "Content-Type": "multipart/form-data", 
+        },
+      });
+      console.log("responce is +++"+responce);
+      setMessage(responce.data);
+      setType("success");
+      setShowPopup(true);
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+      setMessage("unable to upload");
+      setType("error");
+      setShowPopup(true);
+    }
+    setServiceImage(null);
+    setSectorName("");
+    setImagePreview("");
+    handleCloseSectorDialog();
+    setUpdated(prev => !prev);
+  }
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -91,10 +153,14 @@ const ServiceDashboard = () => {
           },
         });
         console.log("Response from server:", response);
-        alert("Form submitted successfully!");
+        setMessage(response.data);
+         setType("success");
+         setShowPopup(true);
       } catch (error) {
         console.error("Error submitting the form:", error);
-        alert("Failed to submit the form. Please try again.");
+        setMessage("unable to upload");
+        setType("error");
+        setShowPopup(true);
       }
       setServiceName("");
       setServiceDescription("");
@@ -133,11 +199,40 @@ const ServiceDashboard = () => {
   setUpdated(prev => !prev);
   }
 
-  const handleDelete = () => {
+  const handleDelete = async() => {
     console.log(selectedRows);
-    alert("Service Deleted Successfully!");
+    try {
+      const response = await ApiService.delete(API_URLS.DELETE_SERVICE+selectedRows);
+      console.log(response);
+      setMessage(response);
+      setType("error");
+      setShowPopup(true);
+      handlecloseSectorListDialogbox();
+    } catch (error) {
+      console.log("unable to delete");
+      setMessage("unable to delete");
+      setType("error");
+      setShowPopup(true);
+    }
     handleCloseDeleteDialog();
+    setUpdated(prev => !prev);
+
   };
+ const handleSectorListDelete =async(sector)=>{
+try {
+  const response = await ApiService.delete(API_URLS.DELETE_SERVICE_SECTOR+sector);
+  console.log(response);
+  setMessage(response);
+  setType("error");
+  setShowPopup(true);
+  handlecloseSectorListDialogbox();
+} catch (error) {
+  setMessage("unable to delete");
+  setType("error");
+  setShowPopup(true);
+  console.log("unable to delete");
+}
+ }
 
   const headings = ["Serviceid", "Name","sector", "Description", "show"];
 
@@ -155,7 +250,7 @@ const ServiceDashboard = () => {
             Service Dashboard
           </Typography>
 
-          <Box sx={{ display: "flex", alignItems: "center", gap: "0" }}>
+          {/* <Box sx={{ display: "flex", alignItems: "center", gap: "0" }}>
             <TextField
               placeholder="Search services..."
               variant="outlined"
@@ -187,9 +282,35 @@ const ServiceDashboard = () => {
             >
               Search
             </Button>
-          </Box>
+          </Box> */}
 
           <Box sx={{ display: "flex", gap: "10px" }}>
+        <Button
+          onClick={handleOpenSectorDialog}
+          variant="contained"
+          sx={{
+            backgroundColor: "#6A45F4",
+            color: "#FFFFFF",
+            "&:hover": { backgroundColor: "#5636c7" },
+            margin: "0 auto",
+            display: "block",
+          }}
+        >
+          add sector
+        </Button>
+        <Button
+          onClick={handleOpenSectorListDialogbox}
+          variant="contained"
+          sx={{
+            backgroundColor: "#6A45F4",
+            color: "#FFFFFF",
+            "&:hover": { backgroundColor: "#5636c7" },
+            margin: "0 auto",
+            display: "block",
+          }}
+        >
+          delete sector
+        </Button>
             <IconButton sx={{ color: "#6A45F4" }} onClick={handleOpenAddDialog}>
               <AddIcon />
             </IconButton>
@@ -283,8 +404,12 @@ const ServiceDashboard = () => {
             }}
           >
             <MenuItem value="" disabled>Select Sector</MenuItem>
-            <MenuItem value="3D Printing Services">3D Printing Services</MenuItem>
-            <MenuItem value="Engineering Services">Engineering Services</MenuItem>
+            {sectorList.map(sector => (
+  <MenuItem key={sector} value={sector}>
+    {sector} 
+  </MenuItem>
+))}
+
           </Select>
 
           {/* Service Show Toggle */}
@@ -337,6 +462,71 @@ const ServiceDashboard = () => {
         </Button>
       </DialogActions>
     </Dialog>
+    {/* dialog box for sector  */}
+
+    <Dialog open={openSectordialog} onClose={handleCloseSectorDialog} maxWidth="sm" fullWidth>
+      {/* Close Button */}
+      <IconButton
+        onClick={handleCloseSectorDialog}
+        sx={{ position: "absolute", top: 10, left: 10, color: "#fff" }}
+      >
+        <CloseIcon />
+      </IconButton>
+
+      <DialogTitle sx={{ textAlign: "center", fontWeight: "bold", color: "#6A45F4" }}>
+        Add New Sector
+      </DialogTitle>
+
+      <DialogContent sx={{ display: "flex", gap: "20px", paddingTop: "20px" }}>
+        {/* Sector Name Input on the Left */}
+        <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: "15px" }}>
+          <TextField
+            label="Sector Name"
+            variant="outlined"
+            fullWidth
+            value={sectorName}
+            onChange={(e) => setSectorName(e.target.value)}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": { borderColor: "#6A45F4" },
+              },
+              "& .MuiInputLabel-root.Mui-focused": { color: "#6A45F4" },
+            }}
+          />
+          
+          {/* Upload Image Button */}
+          <Button
+            variant="contained"
+            component="label"
+            sx={{ backgroundColor: "#6A45F4", color: "#fff", "&:hover": { backgroundColor: "#5636c7" } }}
+          >
+            Upload Image
+            <input type="file" hidden accept="image/*" onChange={handleImageUpload} />
+          </Button>
+        </Box>
+
+        {/* Image Preview on the Right */}
+        <Box sx={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center", border: "1px solid #ddd", borderRadius: "5px", height: "150px", backgroundColor: "#f7f7f7" }}>
+          {imagePreview ? (
+            <img src={imagePreview} alt="Preview" style={{ maxWidth: "100%", maxHeight: "100%" }} />
+          ) : (
+            <Typography color="textSecondary">No Image Selected</Typography>
+          )}
+        </Box>
+      </DialogContent>
+
+      {/* Submit Button */}
+      <DialogActions>
+        <Button
+          onClick={submitSector}
+          variant="contained"
+          sx={{ backgroundColor: "#6A45F4", color: "#fff", "&:hover": { backgroundColor: "#5636c7" }, width: "100%" }}
+        >
+          Submit
+        </Button>
+      </DialogActions>
+    </Dialog>
+    {/* dialog box for deletion  */}
       <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
         <DialogTitle sx={{ textAlign: "center", fontWeight: "bold", color: "#6A45F4" }}>
           Confirm Deletion
@@ -369,6 +559,42 @@ const ServiceDashboard = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      {/* dialog box forsector deltion  */}
+      <Dialog open={sectorListDialogbox} onClose={handlecloseSectorListDialogbox} maxWidth="sm" fullWidth>
+      <DialogTitle sx={{ textAlign: "center", fontWeight: "bold", color: "#6A45F4" }}>
+        Sector List
+      </DialogTitle>
+
+      <DialogContent>
+        <List>
+          {sectorList.map((sector) => (
+            <ListItem
+              key={sector}
+              secondaryAction={
+                <IconButton edge="end" onClick={() => handleSectorListDelete(sector)} color="error">
+                  <DeleteIcon />
+                </IconButton>
+              }
+            >
+              <ListItemText primary={sector} />
+            </ListItem>
+          ))}
+        </List>
+      </DialogContent>
+
+      <DialogActions>
+        <Button onClick={handlecloseSectorListDialogbox} variant="contained" sx={{ backgroundColor: "#6A45F4", color: "#fff", "&:hover": { backgroundColor: "#5636c7" } }}>
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+    {showPopup && (
+        <SlidePopup
+          message={message}
+          type={type}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </>
   );
 };

@@ -4,6 +4,7 @@ import AddIcon from "@mui/icons-material/Add"; // Add icon
 import DeleteIcon from "@mui/icons-material/Delete"; // Delete icon
 import API_URLS from "../../services/ApiUrl";
 import ApiService from "../../services/ApiService";
+import SlidePopup from "../../services/popup"
 
 const SubServiceDashboard = () => {
   const [subservices, setSubservices] = useState([]);
@@ -11,7 +12,9 @@ const SubServiceDashboard = () => {
   const [loading, setLoading] = useState(true); // Track API loading state
   const [updateed, setUpdated]=useState(true);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-
+  const [showPopup, setShowPopup] = useState(false);
+  const [type, setType] = useState("");
+  const [message, setMessage] = useState("");
 
   // Fetch data from API
   useEffect(() => {
@@ -63,8 +66,14 @@ const SubServiceDashboard = () => {
     try {
       const response = await ApiService.delete(API_URLS.DELETE_SUBSERVICE+selectedRows);
       console.log(response);
+      setMessage(response);
+      setType("error");
+      setShowPopup(true);
     } catch (error) {
       console.error("Unable to fetch:", error);
+      setMessage("unable to delete");
+      setType("error");
+      setShowPopup(true);
     }     handleCloseDeleteDialog();
     setUpdated(prev => !prev);
 
@@ -80,12 +89,8 @@ const SubServiceDashboard = () => {
     serviceId: "",
     subserviceImage: null,
   });
-
-  // Dummy sector options (Replace with API call)
   const [sector,setSectors] = useState([]);
 
-
-  // Handle form input change
   const handleChange = (e) => {
     setFormData1({ ...formData1, [e.target.name]: e.target.value });
   };
@@ -116,10 +121,16 @@ const SubServiceDashboard = () => {
             },
           });
        console.log(response);
+       setMessage(response.data);
+      setType("success");
+      setShowPopup(true);
        setUpdated(prev => !prev);
 
       } catch (error) {
         console.error("Unable to fetch:", error);
+        setMessage("unable to upload");
+      setType("error");
+      setShowPopup(true);
       } 
       setFormData1({
         subserviceId: 0,
@@ -483,6 +494,14 @@ const SubServiceDashboard = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      
+{showPopup && (
+        <SlidePopup
+          message={message}
+          type={type}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </AppBar>
   );
 };

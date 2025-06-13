@@ -17,6 +17,7 @@ const ApiService = {
     post: async (url, data,headers) => {
         console.log(headers);
         console.log(url);
+        console.log(data);
         if (typeof headers === "undefined") {
             console.log("myVariable is undefined");
         headers=  {headers: {
@@ -47,6 +48,7 @@ const ApiService = {
 
     delete: async (url) => {
         try {
+            console.log(BUrl+url);
             const response = await axios.delete(BUrl+url);
             console.log(response.data);
             return response.data;

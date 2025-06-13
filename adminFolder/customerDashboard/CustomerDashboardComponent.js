@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Table,AppBar,Toolbar, TableHead, TableRow, Box, TableCell, TableBody, Checkbox, IconButton, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, Button } from "@mui/material";
+import { Table,  InputLabel,AppBar,Toolbar, TableHead, TableRow, Box, TableCell, TableBody, Checkbox, IconButton, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Select, MenuItem, Button } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add"; // Add icon
 import DeleteIcon from "@mui/icons-material/Delete"; // Delete icon
 import API_URLS from "../../services/ApiUrl";
 import ApiService from "../../services/ApiService";
 
 const CustomerDashboard = () => {
+  const [filteredusers, setFilteredUsers] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true); // Track API loading state
@@ -13,6 +14,18 @@ const CustomerDashboard = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [selectedTypeData,setSelectedTypeData]=useState([]);
   const [click,setClick]=useState("add");
+  const [status, setStatus] = useState('')
+  const [type, setType]= useState("");
+  const handleStatusChange = (e) => {
+    setStatus(e.target.value)
+    setFilteredUsers(users.filter(user=>(user.status==e.target.value)));
+    // …maybe fire off a filter or API call here
+  }
+  const handleTypeChange = (e) => {
+    setType(e.target.value);
+    setFilteredUsers(users.filter(user=>(user.selectedType==e.target.value)));
+    // …maybe fire off a filter or API call here
+  }
 
   // Fetch data from API
   useEffect(() => {
@@ -20,6 +33,7 @@ const CustomerDashboard = () => {
       try {
         const response = await ApiService.get(API_URLS.GET_USERS);
         setUsers(Array.isArray(response) ? response : []);
+        setFilteredUsers(response);
       } catch (error) {
         console.error("Unable to fetch:", error);
         setUsers([]); // Ensures empty array on failure
@@ -56,12 +70,12 @@ const CustomerDashboard = () => {
 
   const handleDelete =async () => {
     console.log(selectedRows);
-    // try {
-    //   const response = await ApiService.delete(API_URLS.DELETE_SUBSERVICE+selectedRows);
-    //   console.log(response);
-    // } catch (error) {
-    //   console.error("Unable to fetch:", error);
-    // } 
+    try {
+      const response = await ApiService.delete(API_URLS.DELETEUSER+selectedRows);
+      console.log(response);
+    } catch (error) {
+      console.error("Unable to fetch:", error);
+    } 
         handleCloseDeleteDialog();
     setUpdated(prev => !prev);
 
@@ -69,6 +83,7 @@ const CustomerDashboard = () => {
   // ---------- Dialog-related state & handlers ----------
   const [openDialog, setOpenDialog] = useState(false);
   const [formData1, setFormData1] = useState({
+    customerId:"",
     customerName: "",
     customerContact: "",
     selectedType: "",
@@ -155,6 +170,7 @@ const CustomerDashboard = () => {
         console.error("Unable to fetch:", error);
       } 
       setFormData1({
+        customerId:"",
         customerName: "",
         selectedType: "",
         selectedTypeId: "  ",
@@ -165,6 +181,7 @@ const CustomerDashboard = () => {
       setSelectedTypeData([]);
     setOpenDialog(false); // Close dialog after submitting
   };
+  
 
   // Open Dialog
     const handleOpenAddDialog = async() => {
@@ -174,6 +191,7 @@ const CustomerDashboard = () => {
 
       setClick("add");
       setFormData1({
+        customerId:"",
         customerName: "",
         selectedType: "",
         selectedTypeId: "  ",
@@ -183,16 +201,7 @@ const CustomerDashboard = () => {
       })
       setOpenDialog(false)};
 
-  // ---------- End of Dialog-related section ----------
 
-  async function urlToFile(imageUrl, fileName) {
-    const response = await fetch(imageUrl);
-    const blob = await response.blob(); // Convert response to Blob
-
-    // Create File object
-    const file = new File([blob], fileName, { type: blob.type });
-    return file;
-}
 // -------------------------method to update--------------------
   const handleUpdateClick=async(user)=>{
     console.log(user);
@@ -202,6 +211,7 @@ const CustomerDashboard = () => {
       usercomments="";
     }
       setFormData1({
+        customerId: user.customerId,
         customerName: user.customerName,
         customerContact: user.customerContact,
         selectedType: user.selectedType,
@@ -215,6 +225,38 @@ const CustomerDashboard = () => {
     console.log(formData1)
     setClick("view");
       setOpenDialog(true); // Open Dialog
+  }
+  const handleStatusUpdate =async(Updatestatus)=>{
+
+    console.log("____________++++++++"+Updatestatus);
+   const  updateData={
+      customerId:formData1.customerId,
+        customerName:formData1.customerName,
+        selectedType: formData1.selectedType,
+        selectedTypeId:formData1.selectedTypeId,
+        customerContact: formData1.customerContact,
+        comments:formData1.comments,
+        status:Updatestatus
+    }
+    console.log(updateData);
+   try{ const response = await ApiService.put(API_URLS.UPDATEUSERDETAILS+updateData.customerId,updateData,)
+    console.log(response);
+       setUpdated(prev => !prev);
+
+      } catch (error) {
+        console.error("Unable to fetch:", error);
+      } 
+      setFormData1({
+        customerId:"",
+        customerName: "",
+        selectedType: "",
+        selectedTypeId: "  ",
+        customerContact: "",
+        comments: "",
+        status:""
+      })
+      setSelectedTypeData([]);
+    setOpenDialog(false); // Close dialog after submitting
   }
 
   return (
@@ -230,9 +272,58 @@ const CustomerDashboard = () => {
           <Typography variant="h6" sx={{ color: "#6A45F4", fontWeight: "bold" }}>
             Customer Dashboard
           </Typography>
+        
+        <Box sx={{width:"25%" ,  display: "flex", justifyContent: "space-between",}}>
+        <Select
+              name="status"
+              value={status}
+              onChange={handleStatusChange}
+              displayEmpty
+              
+              sx={{
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                width:"45%",
+                
+              }}
+            >
+              <MenuItem value="" disabled>select status</MenuItem>
+              <MenuItem value="not yet started">To Do</MenuItem>
+              <MenuItem value="inProgress">In Progress</MenuItem>
+              <MenuItem value="done">Done</MenuItem>
+              
+            </Select>
+            <Select
+              name="selected type"
+              value={type}
+              onChange={handleTypeChange}
+              displayEmpty
+              sx={{
+                "& .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                "&:hover .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                  borderColor: "#6A45F4",
+                },
+                width:"45%",
+              }}
+            >
+              <MenuItem value="" disabled>select type</MenuItem>
+              <MenuItem value="services">services</MenuItem>
+              <MenuItem value="products">products</MenuItem>              
+            </Select>
 
-          
-
+        </Box>
           <Box sx={{ display: "flex", gap: "10px" }}>
           <IconButton sx={{ color: "#6A45F4" }} onClick={handleOpenAddDialog}>
           <AddIcon />
@@ -289,12 +380,13 @@ const CustomerDashboard = () => {
               <TableCell sx={{ fontWeight: "bold" }}>contact</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>selectedtype</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>selectedtype ID </TableCell>
+              <TableCell sx={{ fontWeight: "bold" }}>status</TableCell>
               <TableCell sx={{ fontWeight: "bold" }}>Action</TableCell>
 
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
+            {filteredusers.map((user) => (
               <TableRow key={user.customerId}>
                 <TableCell>
                   <Checkbox
@@ -315,6 +407,7 @@ const CustomerDashboard = () => {
                 <TableCell>
                   {user.selectedTypeId}
                 </TableCell>
+                <TableCell>{user.status}</TableCell>
                 <TableCell>
       <Button
         variant="contained"
@@ -529,7 +622,7 @@ const CustomerDashboard = () => {
               connect
             </Button>
             {formData1.status==="not yet started"?(<Button
-              onClick={handleSubmit}
+              onClick={()=>{handleStatusUpdate("inProgress")}}
               variant="contained"
               sx={{
                 backgroundColor: "#6A45F4",
@@ -543,7 +636,7 @@ const CustomerDashboard = () => {
               InPogress
             </Button>):(<></>)}
             <Button
-              onClick={handleSubmit}
+              onClick={()=>{handleStatusUpdate("done")}}
               variant="contained"
               sx={{
                 backgroundColor: "#6A45F4",
