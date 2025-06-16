@@ -41,6 +41,7 @@ color: #004aad !important;
   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
   margin: 0 30px;
   background-color: white !important;
+
 }
 
 /* Apply fade-in when the slide is active */
@@ -148,14 +149,13 @@ color: #004aad !important;
   }
 }
 .carousel .control-arrow {
-  background-color: transparent; /* Dark background for arrows */
+  background-color: black  !important; /* Dark background for arrows */
   border-radius: 50%; /* Make them circular */
   width: 40px;
   height: 40px;
-  z-index: 2; /* Ensure they stay above other content */
 }
 .carousel .control-arrow:hover {
-  background: transparent !important;
+  background: black !important;
 }
 /* Left arrow: yellow background */
 .carousel .control-arrow.control-prev {
@@ -165,6 +165,7 @@ color: #004aad !important;
 /* Right arrow: blue background */
 .carousel .control-arrow.control-next {
   top: 50%;
+
 }
 
 /* Optional: Override hover effect if needed */
