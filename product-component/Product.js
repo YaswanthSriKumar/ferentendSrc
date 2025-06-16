@@ -139,7 +139,7 @@ function ProductGrid({ isDarkMode }) {
       {/* Product Grid */}
       <Grid container spacing={2}>
         {products.map((product) => (
-          <Grid item xs={12} sm={4} key={product.productId}>
+          <Grid item xs={12} sm={6} md={4} lg={3} key={product.productId}>
             <Box
               className={`product-card ${isDarkMode ? 'product-card-dark' : ''}`}
               onClick={() => handleCardClick(product)}

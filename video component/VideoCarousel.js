@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Import carousel styles
 
@@ -53,8 +53,13 @@ const VideoCarousel = ({isDarkMode}) => {
                 Here is the best site for you
               </Typography>
               <Typography variant="h5" className= {` ${isDarkMode ? 'plaintext-darkmode' : 'plaintext'}`} sx={{ marginTop: "10px" }}>
-                Get all the services and products you need in one place, in our place
+                Get all the services and products you need in one place, in our place  
+                <Button 
+                variant="contained"
+                sx={{ color: "white", bgcolor:"transparent", border: "1px solid white", ml:"10px"}}
+                >click here</Button>
               </Typography>
+              
             </Box>
           </Box>
         ))}
