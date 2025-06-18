@@ -18,12 +18,16 @@ const CustomerDashboard = () => {
   const [type, setType]= useState("");
   const handleStatusChange = (e) => {
     setStatus(e.target.value)
-    setFilteredUsers(users.filter(user=>(user.status==e.target.value)));
+    setFilteredUsers(users.filter(user=>(user.status==e.target.value)).slice().sort((a, b) => {
+      return new Date(a.requestedTime) - new Date(b.requestedTime);
+    }));
     // …maybe fire off a filter or API call here
   }
   const handleTypeChange = (e) => {
     setType(e.target.value);
-    setFilteredUsers(users.filter(user=>(user.selectedType==e.target.value)));
+    setFilteredUsers(users.filter(user=>(user.selectedType==e.target.value)).slice().sort((a, b) => {
+      return new Date(a.requestedTime) - new Date(b.requestedTime);
+    }));
     // …maybe fire off a filter or API call here
   }
 
@@ -33,7 +37,9 @@ const CustomerDashboard = () => {
       try {
         const response = await ApiService.get(API_URLS.GET_USERS);
         setUsers(Array.isArray(response) ? response : []);
-        setFilteredUsers(response);
+        setFilteredUsers( response.slice().sort((a, b) => {
+          return new Date(a.requestedTime) - new Date(b.requestedTime);
+        }));
       } catch (error) {
         console.error("Unable to fetch:", error);
         setUsers([]); // Ensures empty array on failure
